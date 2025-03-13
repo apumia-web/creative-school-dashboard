@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <input type="text" id="phone" placeholder="Enter Phone Number">
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="login()">Login</button>
+    
+    <p id="message"></p>
+
+    <br><br>
+    <!-- Registration Link -->
+    <p>Don't have an account? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRfqvEHYcMAebuUKEX8rbXnqpOdKoLq7UOZuBJprHo5fvhQQ/viewform?usp=header" target="_blank">Register here</a></p>
+
+    <script>
+        function login() {
+            var phone = document.getElementById("phone").value;
+            var password = document.getElementById("password").value;
+
+            fetch("https://script.google.com/macros/s/AKfycbwD-35qpBcPVlMTV404u08rPaiE01AhAQJ31FE0mpiW6WHDtXSa5375bYmsJHbZzJ1VNg/exec", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ phone: phone, password: password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    window.location.href = "dashboard.html"; // লগইন সফল হলে ড্যাশবোর্ডে নিয়ে যাবে
+                } else {
+                    document.getElementById("message").innerText = data.message;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
